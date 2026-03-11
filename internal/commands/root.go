@@ -7,9 +7,9 @@ import (
 
 const (
 	toolkitUse   = "toolkit"
-	toolkitShort = "Toolkit é uma CLI utilitária"
-	toolkitLong  = `Toolkit é uma Interface de Linha de Comando (CLI) utilitária em Go.
-Use os subcomandos para iterar sobre as funcionalidades disponíveis.`
+	toolkitShort = "A utility CLI toolkit written in Go"
+	toolkitLong  = `Toolkit is a command-line interface (CLI) with utilities for network diagnostics 
+and data manipulation. Use the available subcommands to interact with the features.`
 )
 
 // rootCmd representa o comando base quando chamado sem subcomandos
@@ -34,4 +34,3 @@ func init() {
 		}
 	})
 }
-

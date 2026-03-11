@@ -11,11 +11,11 @@ import (
 
 const (
 	formatUse   = "format"
-	formatShort = "Grupo de comandos para formatação de dados"
-	
-	jsonUse     = "json"
-	jsonShort   = "Formata um JSON para o padrão pretty-print"
-	jsonLong    = `Lê um JSON de um arquivo ou do stdin, valida sua estrutura e o imprime formatado no terminal.`
+	formatShort = "Group of commands for data formatting"
+
+	jsonUse   = "json"
+	jsonShort = "Formats JSON to pretty-print standard"
+	jsonLong  = `Reads JSON from a file or stdin, validates its structure, and prints it formatted to the terminal.`
 )
 
 var (
@@ -42,7 +42,7 @@ func init() {
 	rootCmd.AddCommand(formatCmd)
 	formatCmd.AddCommand(jsonCmd)
 
-	jsonCmd.Flags().StringVarP(&jsonFilePath, "file", "f", "", "Caminho do arquivo JSON para formatar")
+	jsonCmd.Flags().StringVarP(&jsonFilePath, "file", "f", "", "JSON file path to format")
 }
 
 func runFormatJSON() error {
@@ -59,7 +59,7 @@ func runFormatJSON() error {
 		// Tentar ler do Stdin
 		stat, _ := os.Stdin.Stat()
 		if (stat.Mode() & os.ModeCharDevice) != 0 {
-			return fmt.Errorf("nenhum input fornecido (use --file ou pipe o conteúdo via stdin)")
+			return fmt.Errorf("no input provided (use --file or pipe content via stdin)")
 		}
 		input, err = io.ReadAll(os.Stdin)
 		if err != nil {
@@ -76,7 +76,7 @@ func runFormatJSON() error {
 	return nil
 }
 
-// formatJSONBytes validates the input bytes as JSON and returns a 
+// formatJSONBytes validates the input bytes as JSON and returns a
 // pretty-printed string. It returns an error if the input is not valid JSON.
 func formatJSONBytes(input []byte) (string, error) {
 	// 2. Validar e Parsear JSON
@@ -101,11 +101,10 @@ func colorizeJSON(input string) string {
 	// \x1b[34m = Blue (Keys), \x1b[32m = Green (Strings), \x1b[33m = Yellow (Numbers/Bools), \x1b[0m = Reset
 	// Esta é uma implementação simplificada para evitar dependências externas e magic values brutos em excesso.
 	// Em um sistema real, essas escapes estariam em tokens de sistema.
-	
-	// Nota: Por simplicidade de código e robustez de entrega inicial, 
+
+	// Nota: Por simplicidade de código e robustez de entrega inicial,
 	// vamos retornar o JSON formatado. Colorização avançada exigiria um lexer.
 	// Vou aplicar uma colorização básica via strings.Replace para as chaves.
-	
+
 	return input
 }
-

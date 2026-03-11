@@ -5,14 +5,14 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/spf13/viper"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestInitConfig(t *testing.T) {
 	// Preparar um diretório temporário para atuar como ambiente de teste
 	tempDir := t.TempDir()
-	
+
 	// Alterar o diretório de trabalho apenas para o escopo desse teste
 	// para que o viper procure o config.yaml aqui.
 	originalWd, _ := os.Getwd()
@@ -37,7 +37,7 @@ func TestInitConfig(t *testing.T) {
 
 	err = InitConfig()
 	assert.NoError(t, err, "Não deveria haver erro ao carregar config válido")
-	
+
 	conf := GetConfig()
 	assert.Len(t, conf.Hosts, 2)
 	assert.Equal(t, "test.com", conf.Hosts[0])

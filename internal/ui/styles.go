@@ -4,11 +4,11 @@ import "github.com/charmbracelet/lipgloss"
 
 var (
 	// Standard color tokens for the design system.
-	ColorPrimary   = lipgloss.Color("63")  // Roxo/Azul premium
-	ColorSuccess   = lipgloss.Color("42")  // Verde vibrante
-	ColorError     = lipgloss.Color("196") // Vermelho vibrante
-	ColorGray      = lipgloss.Color("240")
-	ColorWhite     = lipgloss.Color("255")
+	ColorPrimary = lipgloss.Color("63")  // Roxo/Azul premium
+	ColorSuccess = lipgloss.Color("42")  // Verde vibrante
+	ColorError   = lipgloss.Color("196") // Vermelho vibrante
+	ColorGray    = lipgloss.Color("240")
+	ColorWhite   = lipgloss.Color("255")
 )
 var (
 	// HeaderStyle defines the visual style for table headers.

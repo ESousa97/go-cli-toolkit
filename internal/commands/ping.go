@@ -7,21 +7,20 @@ import (
 	"sync"
 	"time"
 
-	"github.com/charmbracelet/lipgloss"
-	"github.com/charmbracelet/lipgloss/table"
 	"github.com/ESousa97/go-cli-toolkit/internal/config"
 	"github.com/ESousa97/go-cli-toolkit/internal/ui"
+	"github.com/charmbracelet/lipgloss"
+	"github.com/charmbracelet/lipgloss/table"
 	"github.com/spf13/cobra"
 )
 
 const (
-	pingUse     = "ping [url...]"
-	pingShort   = "Verifica se um ou mais hosts estão acessíveis"
-	pingLong    = `Verifica se as URLs informadas estão acessíveis através de uma requisição HTTP GET concorrente. 
-Se nenhuma URL for passada, utiliza a lista de 'hosts favoritos' do config.yaml.`
+	pingUse   = "ping [url...]"
+	pingShort = "Checks if one or more hosts are accessible"
+	pingLong  = `Checks if the provided URLs are accessible via concurrent HTTP GET requests. 
+If no URLs are provided, it uses the 'favorite hosts' list from the configuration file.`
 	pingTimeout = 5 * time.Second
 )
-
 
 type pingResult struct {
 	url     string
@@ -42,7 +41,7 @@ var pingCmd = &cobra.Command{
 		}
 
 		if len(targets) == 0 {
-			return fmt.Errorf("nenhum host informado e nenhum host favorito encontrado no config.yaml")
+			return fmt.Errorf("no host provided and no favorite hosts found in config repository")
 		}
 
 		return runPing(targets)
@@ -71,7 +70,7 @@ func runPing(urls []string) error {
 		close(resultsChan)
 	}()
 
-	fmt.Printf("Iniciando ping em %d hosts...\n\n", len(urls))
+	fmt.Printf("Starting ping for %d hosts...\n\n", len(urls))
 
 	t := table.New().
 		Border(lipgloss.NormalBorder()).
@@ -139,4 +138,3 @@ func pingHostConcurrently(targetURL string) pingResult {
 
 	return pingResult{url: targetURL, online: false, status: resp.StatusCode, message: "status code inválido"}
 }
-

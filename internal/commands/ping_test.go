@@ -50,7 +50,7 @@ func TestPingHostConcurrently(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			res := pingHostConcurrently(tt.targetURL)
-			
+
 			assert.Equal(t, tt.targetURL, res.url, "A URL de resposta deve ser a mesma.")
 			assert.Equal(t, tt.wantOnline, res.online, "O status online retornado divergiu.")
 			assert.Equal(t, tt.wantStatus, res.status, "O Http StatusCode retornado divergiu.")
