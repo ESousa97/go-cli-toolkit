@@ -44,7 +44,7 @@ O repositório prioriza:
 ## Funcionalidades
 
 - **Comando Raiz (`toolkit`)** — Configuração inicial do entrypoint.
-- **Subcomando `ping`** — Verifica se uma URL está acessível através de uma requisição HTTP GET com timeout controlado.
+- **Subcomando `ping`** — Verifica se um ou mais hosts estão acessíveis através de requisições HTTP GET concorrentes (Goroutines).
 - **Subcomando `format json`** — Lê um JSON (via arquivo ou stdin), valida sua estrutura e o imprime formatado (Pretty Print).
 
 ---
@@ -71,10 +71,17 @@ graph TD
         C -- Registers --> G[format.go]
     end
 
+    subgraph "Concorrência (Ping)"
+        D -- Spawns --> E1[Goroutine 1]
+        D -- Spawns --> E2[Goroutine 2]
+        D -- Spawns --> En[Goroutine N]
+        E1 & E2 & En -- Results --> Ch[Channel]
+        Ch -- Summary --> Out[Console Output]
+    end
+
     subgraph "Core Business"
-        D -- Executes --> E[pingHost]
+        E1 & E2 & En -- Uses --> F[net/http]
         G -- Executes --> H[runFormatJSON]
-        E -- Uses --> F[net/http]
         H -- Uses --> I[encoding/json]
     end
 ```
@@ -142,11 +149,24 @@ Para rodar ajuda da ferramenta raiz:
 
 ### Ping
 
-Executar o subcomando `ping` em uma URL válida:
+Executar o subcomando `ping` em múltiplos hosts de forma concorrente:
 
-```bash
-./tk.exe ping https://www.google.com
-# O host https://www.google.com está ONLINE (Status: 200)
+```powershell
+.\tk.exe ping https://google.com https://github.com https://invalid.site.test
+```
+
+Exemplo de saída:
+```text
+Iniciando ping em 3 hosts...
+
+[OK]   https://google.com (Status: 200)
+[OK]   https://github.com (Status: 200)
+[ERRO] https://invalid.site.test (host inacessível)
+
+--- Resumo ---
+Sucessos: 2
+Falhas:   1
+Total:    3
 ```
 
 ### Format JSON
