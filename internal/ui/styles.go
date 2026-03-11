@@ -4,9 +4,9 @@ import "github.com/charmbracelet/lipgloss"
 
 var (
 	// Standard color tokens for the design system.
-	ColorPrimary = lipgloss.Color("63")  // Roxo/Azul premium
-	ColorSuccess = lipgloss.Color("42")  // Verde vibrante
-	ColorError   = lipgloss.Color("196") // Vermelho vibrante
+	ColorPrimary = lipgloss.Color("63")  // Premium Purple/Blue
+	ColorSuccess = lipgloss.Color("42")  // Vibrant Green
+	ColorError   = lipgloss.Color("196") // Vibrant Red
 	ColorGray    = lipgloss.Color("240")
 	ColorWhite   = lipgloss.Color("255")
 )

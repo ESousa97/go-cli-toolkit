@@ -10,15 +10,14 @@ func TestStylesInitialization(t *testing.T) {
 	// styles.go defines variables and style constants,
 	// a basic test ensures they are loaded/rendered without panic.
 
-	// Verifica se as cores não estão vazias internamente
+	// Check if colors are not empty internally
 	assert.NotNil(t, ColorPrimary)
 	assert.NotNil(t, ColorSuccess)
 	assert.NotNil(t, ColorError)
 
-	// Verifica a renderização das constantes de status
+	// Verify status constant rendering
 	assert.Contains(t, StatusOkText, "ONLINE", "Success constant should contain ONLINE text")
 	assert.Contains(t, StatusFailText, "OFFLINE", "Error constant should contain OFFLINE text")
 
-	// Como é UI, a lógica aqui é mais para cobrir a sintaxe Go e evitar regressões
-	// que quebrem a compilação por erros de tipo.
+	// This test is mainly for syntax coverage and preventing architecture regressions.
 }

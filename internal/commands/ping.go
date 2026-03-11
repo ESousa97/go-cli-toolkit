@@ -29,7 +29,7 @@ type pingResult struct {
 	message string
 }
 
-// pingCmd representa o comando ping
+// pingCmd represents the ping command
 var pingCmd = &cobra.Command{
 	Use:   pingUse,
 	Short: pingShort,
@@ -64,7 +64,7 @@ func runPing(urls []string) error {
 		}(url)
 	}
 
-	// Fecha o channel quando todos terminarem
+	// Close channel when all routines finish
 	go func() {
 		wg.Wait()
 		close(resultsChan)
@@ -114,7 +114,7 @@ func pingHostConcurrently(targetURL string) pingResult {
 	ctx, cancel := context.WithTimeout(context.Background(), pingTimeout)
 	defer cancel()
 
-	// Garantir protocolo para evitar erros comuns de iniciante
+	// Ensure protocol to avoid common beginner errors
 	fullURL := targetURL
 	if len(targetURL) < 4 || (targetURL[:4] != "http") {
 		fullURL = "http://" + targetURL
@@ -122,13 +122,13 @@ func pingHostConcurrently(targetURL string) pingResult {
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, fullURL, nil)
 	if err != nil {
-		return pingResult{url: targetURL, online: false, message: "erro ao criar requisição"}
+		return pingResult{url: targetURL, online: false, message: "error creating request"}
 	}
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return pingResult{url: targetURL, online: false, message: "host inacessível"}
+		return pingResult{url: targetURL, online: false, message: "host unreachable"}
 	}
 	defer resp.Body.Close()
 
@@ -136,5 +136,5 @@ func pingHostConcurrently(targetURL string) pingResult {
 		return pingResult{url: targetURL, online: true, status: resp.StatusCode}
 	}
 
-	return pingResult{url: targetURL, online: false, status: resp.StatusCode, message: "status code inválido"}
+	return pingResult{url: targetURL, online: false, status: resp.StatusCode, message: "invalid status code"}
 }

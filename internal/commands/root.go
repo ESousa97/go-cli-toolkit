@@ -12,12 +12,12 @@ const (
 and data manipulation. Use the available subcommands to interact with the features.`
 )
 
-// rootCmd representa o comando base quando chamado sem subcomandos
+// rootCmd represents the base command when called without subcommands
 var rootCmd = &cobra.Command{
 	Use:           toolkitUse,
 	Short:         toolkitShort,
 	Long:          toolkitLong,
-	SilenceErrors: true, // O main.go já trata e loga o erro
+	SilenceErrors: true, // main.go handles and logs the error
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -29,8 +29,8 @@ func Execute() error {
 func init() {
 	cobra.OnInitialize(func() {
 		if err := config.InitConfig(); err != nil {
-			// Em uma CLI, erros de configuração podem ser reportados mas nem sempre impedem a execução
-			// Dependendo da criticidade, poderíamos usar panic ou exit.
+			// In a CLI, config errors are reported but don't always stop execution.
+			// Depending on criticality, we could use panic or exit.
 		}
 	})
 }

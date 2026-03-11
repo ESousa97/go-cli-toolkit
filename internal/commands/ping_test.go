@@ -9,13 +9,13 @@ import (
 )
 
 func TestPingHostConcurrently(t *testing.T) {
-	// Cria servidor de teste que retorna HTTP 200 OK
+	// Create test server returning HTTP 200 OK
 	serverOK := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	}))
 	defer serverOK.Close()
 
-	// Cria servidor de teste que retorna HTTP 500 Internal Server Error
+	// Create test server returning HTTP 500 Internal Server Error
 	serverErr := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 	}))
@@ -41,7 +41,7 @@ func TestPingHostConcurrently(t *testing.T) {
 		},
 		{
 			name:       "Host Inexistente / Timeout Replicado",
-			targetURL:  "http://localhost:59999", // Porta local normalmente fechada, gera connection refused rápido
+			targetURL:  "http://localhost:59999", // Local port normally closed, generates connection refused quickly
 			wantOnline: false,
 			wantStatus: 0,
 		},

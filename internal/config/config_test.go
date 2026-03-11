@@ -10,25 +10,24 @@ import (
 )
 
 func TestInitConfig(t *testing.T) {
-	// Preparar um diretório temporário para atuar como ambiente de teste
+	// Prepare a temporary directory to act as a test environment
 	tempDir := t.TempDir()
 
-	// Alterar o diretório de trabalho apenas para o escopo desse teste
-	// para que o viper procure o config.yaml aqui.
+	// Change working directory for test scope so Viper finds config.yaml here.
 	originalWd, _ := os.Getwd()
 	defer os.Chdir(originalWd)
 	os.Chdir(tempDir)
 
-	// Resetar o viper e a globalConfig (útil se o teste rodar junto com outros)
+	// Reset Viper and globalConfig (useful for parallel tests)
 	viper.Reset()
 	globalConfig = Config{}
 
-	// Teste 1: Arquivo não existe (não deve retornar erro, pois o InitConfig ignora ConfigFileNotFoundError)
+	// Test 1: File doesn't exist (should not return error, InitConfig ignores ConfigFileNotFoundError)
 	err := InitConfig()
 	assert.NoError(t, err, "A inicialização sem config.yaml deve ser tratada sem erro")
 	assert.Empty(t, GetConfig().Hosts, "A lista de hosts deveria estar vazia")
 
-	// Teste 2: Criar arquivo config.yaml válido
+	// Test 2: Create valid config.yaml file
 	configContent := []byte("hosts:\n  - test.com\n  - example.org")
 	os.WriteFile(filepath.Join(tempDir, "config.yaml"), configContent, 0644)
 

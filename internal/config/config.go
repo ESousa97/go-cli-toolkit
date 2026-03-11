@@ -18,27 +18,27 @@ var globalConfig Config
 // InitConfig initializes Viper to discover and load the configuration file.
 // It looks for config.yaml in the current directory or $HOME/.toolkit.
 func InitConfig() error {
-	viper.SetConfigName("config") // nome do arquivo (sem extensão)
-	viper.SetConfigType("yaml")   // ou viper.SetConfigType("yml")
+	viper.SetConfigName("config") // FileName (without extension)
+	viper.SetConfigType("yaml")   // or yml
 
-	// Caminhos de busca
-	viper.AddConfigPath(".") // Diretório atual
+	// Search paths
+	viper.AddConfigPath(".") // Current directory
 
 	home, err := os.UserHomeDir()
 	if err == nil {
 		viper.AddConfigPath(filepath.Join(home, ".toolkit"))
 	}
 
-	// Tenta ler o arquivo de configuração
+	// Attempt to read configuration file
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			// Arquivo não encontrado, podemos ignorar ou definir padrões
+			// File not found, we can ignore or set defaults
 			return nil
 		}
 		return fmt.Errorf("erro ao ler config.yaml: %w", err)
 	}
 
-	// Mapeia para a struct
+	// Map to struct
 	if err := viper.Unmarshal(&globalConfig); err != nil {
 		return fmt.Errorf("erro ao mapear configuração: %w", err)
 	}
