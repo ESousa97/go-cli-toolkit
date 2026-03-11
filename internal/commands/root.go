@@ -13,12 +13,10 @@ Use os subcomandos para iterar sobre as funcionalidades disponíveis.`
 
 // rootCmd representa o comando base quando chamado sem subcomandos
 var rootCmd = &cobra.Command{
-	Use:   toolkitUse,
-	Short: toolkitShort,
-	Long:  toolkitLong,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Use:           toolkitUse,
+	Short:         toolkitShort,
+	Long:          toolkitLong,
+	SilenceErrors: true, // O main.go já trata e loga o erro
 }
 
 // Execute adiciona todos os comandos filhos ao root command e configura flags de forma apropriada.
