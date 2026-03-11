@@ -3,14 +3,15 @@ package ui
 import "github.com/charmbracelet/lipgloss"
 
 var (
-	// Definição de cores (tokens semânticos)
+	// Standard color tokens for the design system.
 	ColorPrimary   = lipgloss.Color("63")  // Roxo/Azul premium
 	ColorSuccess   = lipgloss.Color("42")  // Verde vibrante
 	ColorError     = lipgloss.Color("196") // Vermelho vibrante
 	ColorGray      = lipgloss.Color("240")
 	ColorWhite     = lipgloss.Color("255")
-
-	// Estilos de Tabela
+)
+var (
+	// HeaderStyle defines the visual style for table headers.
 	HeaderStyle = lipgloss.NewStyle().
 			Foreground(ColorWhite).
 			Background(ColorPrimary).

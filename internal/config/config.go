@@ -8,14 +8,15 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Config define a estrutura de configuração do toolkit
+// Config defines the toolkit configuration structure mapped from yaml.
 type Config struct {
 	Hosts []string `mapstructure:"hosts"`
 }
 
 var globalConfig Config
 
-// InitConfig inicializa o Viper para carregar as configurações
+// InitConfig initializes Viper to discover and load the configuration file.
+// It looks for config.yaml in the current directory or $HOME/.toolkit.
 func InitConfig() error {
 	viper.SetConfigName("config") // nome do arquivo (sem extensão)
 	viper.SetConfigType("yaml")   // ou viper.SetConfigType("yml")
@@ -45,7 +46,7 @@ func InitConfig() error {
 	return nil
 }
 
-// GetConfig retorna a configuração global carregada
+// GetConfig returns a copy of the globally loaded [Config].
 func GetConfig() Config {
 	return globalConfig
 }

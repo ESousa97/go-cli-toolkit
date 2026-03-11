@@ -76,7 +76,8 @@ func runFormatJSON() error {
 	return nil
 }
 
-// formatJSONBytes encapsula a lógica principal de formatação e corzinha para testabilidade
+// formatJSONBytes validates the input bytes as JSON and returns a 
+// pretty-printed string. It returns an error if the input is not valid JSON.
 func formatJSONBytes(input []byte) (string, error) {
 	// 2. Validar e Parsear JSON
 	var raw interface{}
@@ -94,7 +95,8 @@ func formatJSONBytes(input []byte) (string, error) {
 	return colorizeJSON(string(pretty)), nil
 }
 
-// colorizeJSON aplica cores ANSI básicas para destacar chaves e valores
+// colorizeJSON applies basic ANSI color escapes to the JSON string.
+// Note: Currently returns the input as is; advanced colorization requires a lexer.
 func colorizeJSON(input string) string {
 	// \x1b[34m = Blue (Keys), \x1b[32m = Green (Strings), \x1b[33m = Yellow (Numbers/Bools), \x1b[0m = Reset
 	// Esta é uma implementação simplificada para evitar dependências externas e magic values brutos em excesso.
