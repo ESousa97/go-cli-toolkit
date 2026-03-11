@@ -1,0 +1,7 @@
+linters-settings:
+  misspell:
+    ignore-words:
+      - comando
+      - comandos
+      - eles
+      - stretchr
