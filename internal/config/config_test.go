@@ -24,8 +24,8 @@ func TestInitConfig(t *testing.T) {
 
 	// Test 1: File doesn't exist (should not return error, InitConfig ignores ConfigFileNotFoundError)
 	err := InitConfig()
-	assert.NoError(t, err, "A inicialização sem config.yaml deve ser tratada sem erro")
-	assert.Empty(t, GetConfig().Hosts, "A lista de hosts deveria estar vazia")
+	assert.NoError(t, err, "Initialization without config.yaml should be handled without error")
+	assert.Empty(t, GetConfig().Hosts, "Host list should be empty")
 
 	// Test 2: Create valid config.yaml file
 	configContent := []byte("hosts:\n  - test.com\n  - example.org")
@@ -35,7 +35,7 @@ func TestInitConfig(t *testing.T) {
 	globalConfig = Config{}
 
 	err = InitConfig()
-	assert.NoError(t, err, "Não deveria haver erro ao carregar config válido")
+	assert.NoError(t, err, "Should not have error loading valid config")
 
 	conf := GetConfig()
 	assert.Len(t, conf.Hosts, 2)

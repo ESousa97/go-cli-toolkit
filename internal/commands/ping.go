@@ -100,10 +100,10 @@ func runPing(urls []string) error {
 
 	fmt.Println(t.Render())
 
-	fmt.Printf("\n--- Resumo ---\n")
-	fmt.Printf("Sucessos: %d\n", successes)
-	fmt.Printf("Falhas:   %d\n", failures)
-	fmt.Printf("Total:    %d\n", len(urls))
+	fmt.Printf("\n--- Summary ---\n")
+	fmt.Printf("Successes: %d\n", successes)
+	fmt.Printf("Failures:  %d\n", failures)
+	fmt.Printf("Total:     %d\n", len(urls))
 
 	return nil
 }

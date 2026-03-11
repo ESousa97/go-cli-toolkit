@@ -34,13 +34,13 @@ func TestPingHostConcurrently(t *testing.T) {
 			wantStatus: 200,
 		},
 		{
-			name:       "Host Erro 500",
+			name:       "Host Error 500",
 			targetURL:  serverErr.URL,
 			wantOnline: false,
 			wantStatus: 500,
 		},
 		{
-			name:       "Host Inexistente / Timeout Replicado",
+			name:       "Non-existent Host / Replicated Timeout",
 			targetURL:  "http://localhost:59999", // Local port normally closed, generates connection refused quickly
 			wantOnline: false,
 			wantStatus: 0,
@@ -51,9 +51,9 @@ func TestPingHostConcurrently(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			res := pingHostConcurrently(tt.targetURL)
 
-			assert.Equal(t, tt.targetURL, res.url, "A URL de resposta deve ser a mesma.")
-			assert.Equal(t, tt.wantOnline, res.online, "O status online retornado divergiu.")
-			assert.Equal(t, tt.wantStatus, res.status, "O Http StatusCode retornado divergiu.")
+			assert.Equal(t, tt.targetURL, res.url, "Response URL must match.")
+			assert.Equal(t, tt.wantOnline, res.online, "Returned online status mismatch.")
+			assert.Equal(t, tt.wantStatus, res.status, "Returned Http StatusCode mismatch.")
 		})
 	}
 }

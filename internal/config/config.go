@@ -35,12 +35,12 @@ func InitConfig() error {
 			// File not found, we can ignore or set defaults
 			return nil
 		}
-		return fmt.Errorf("erro ao ler config.yaml: %w", err)
+		return fmt.Errorf("error reading config.yaml: %w", err)
 	}
 
 	// Map to struct
 	if err := viper.Unmarshal(&globalConfig); err != nil {
-		return fmt.Errorf("erro ao mapear configuração: %w", err)
+		return fmt.Errorf("error mapping configuration: %w", err)
 	}
 
 	return nil
