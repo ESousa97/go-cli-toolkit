@@ -62,6 +62,24 @@ O repositório prioriza:
 
 ## Arquitetura
 
+O **Go CLI Toolkit** foi projetado seguindo os princípios inegociáveis do _Standard Go Project Layout_ e modularização extrema.
+
+### 🐍 Por que escolhemos o Cobra CLI?
+
+O framework [Cobra](https://github.com/spf13/cobra) foi adotado devido à sua dominância no ecossistema Go (utilizado extensivamente em projetos como Kubernetes, Docker e GitHub CLI). Ele proporciona:
+
+- **Hierarquia Elegante:** Facilita muito o agrupamento lógico por Bounded Contexts em subcomandos isolados (ex: `toolkit format json`).
+- **Desacoplamento de Ponto de Entrada:** Toda inicialização semântica e flags são encapsuladas em `internal/commands/root.go`, blindando o `main.go`.
+- **Governança de Configuração:** Associar o Cobra ao _Viper_ permite externalizar todo o estado fixo para o `config.yaml`, garantindo configurações stateless.
+
+### ⚡ Estratégia de Concorrência (Goroutines e Channels)
+
+O comando Ping é estruturado para suportar o rastreamento em massa, evitando o bloqueio síncrono da interface quando hosts caem em timeouts densos (IO Bound).
+
+1. Disparamos fluxos atômicos via **Goroutines** para processar a rede (`http.Client`) em paralelo.
+2. Usamos `sync.WaitGroup` como **Barreira de Sincronização** aguardando a finalização cega de todos os workers.
+3. Os resultados são coletados de forma unificada e thread-safe via um **Channel** de eventos tipados, que por fim é consumido pelo renderizador passivo de terminal (Lipgloss).
+
 ```mermaid
 graph TD
     subgraph "Entrypoint"
@@ -138,7 +156,8 @@ go mod download
 Quer ver a ferramenta em ação sem precisar fazer o build manual? Abra seu terminal na raiz do projeto e cole os ambientes prontos para testar as dependências (**Lipgloss** e **Viper**):
 
 **1. Ping Concorrente (Múltiplas URLs)**
-Teste o rastreio concorrente via *Goroutines*, formatado na tabela elegante do Lipgloss:
+Teste o rastreio concorrente via _Goroutines_, formatado na tabela elegante do Lipgloss:
+
 ```bash
 go run cmd/toolkit/main.go ping google.com github.com localhost:12345
 ```
@@ -146,13 +165,15 @@ go run cmd/toolkit/main.go ping google.com github.com localhost:12345
 **2. Sistema de "Hosts Favoritos" (Viper)**
 O toolkit tenta ler um `config.yaml` caso não receba parâmetros manuais. Exemplo interativo de criação e teste:
 
-👉 *No macOS / Linux / Git Bash:*
+#### _No macOS / Linux / Git Bash:_
+
 ```bash
 echo -e "hosts:\n  - google.com\n  - inexistent.local.test" > config.yaml
 go run cmd/toolkit/main.go ping
 ```
 
-👉 *No Windows (PowerShell):*
+#### _No Windows (PowerShell):_
+
 ```powershell
 "hosts:`n  - google.com`n  - inexistent.local.test" | Out-File config.yaml -Encoding utf8
 go run cmd/toolkit/main.go ping
@@ -161,14 +182,16 @@ go run cmd/toolkit/main.go ping
 **3. Formatador JSON (Pretty Print)**
 Crie um arquivo JSON numa linha na máquina e o exiba reformatado (Pretty Print) logo na sequência:
 
-👉 *No macOS / Linux / Git Bash:*
+#### _No macOS / Linux / Git Bash:_
+
 ```bash
 echo '{"projeto":"Go CLI","status":"ativo","recursos":["ping","format"]}' > raw.json
 go run cmd/toolkit/main.go format json --file raw.json
 rm raw.json
 ```
 
-👉 *No Windows (PowerShell):*
+#### _No Windows (PowerShell):_
+
 ```powershell
 '{"projeto":"Go CLI","status":"ativo","recursos":["ping","format"]}' > raw.json
 go run cmd/toolkit/main.go format json --file raw.json
@@ -261,6 +284,23 @@ Testando caso de falha:
 ```bash
 ./tk.exe ping https://site.que.nao.existe
 ```
+
+---
+
+## 🤝 Como Contribuir
+
+Ficou interessado em expandir este kit de ferramentas? Contribuições são imensamente encorajadas!
+
+Siga nosso fluxo de governança padronizado:
+
+1. Faça um **Fork** do ecossistema e navegue até a raiz do novo repositório.
+2. Crie sua branch de _feature_ focada no seu domínio (`git checkout -b feature/minha-ferramenta-poderosa`).
+3. Atenha-se às nossas Premissas de Código:
+   - **Módulos Limpos:** Responsabilidade única. Crie subcomandos pequenos.
+   - **Inversões e Padrões:** Faça o isolamento entre lógica core (interfaces) e entrada IO.
+   - **Sem Magic Values:** Extraia strings, cores, e limites de espera para variáveis ou arquivos de configuração (Viper).
+4. Assegure a garantia de qualidade executando a suíte local via `make test`. (Nada avança sem rodar verde!)
+5. Faça seus _commits_ de forma atômica e abra um **Pull Request**.
 
 ---
 
