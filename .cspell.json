@@ -1,0 +1,15 @@
+{
+  "version": "0.2",
+  "language": "en,pt",
+  "words": [
+    "comando",
+    "comandos",
+    "eles",
+    "stretchr"
+  ],
+  "ignorePaths": [
+    "node_modules",
+    "vendor",
+    ".git"
+  ]
+}
