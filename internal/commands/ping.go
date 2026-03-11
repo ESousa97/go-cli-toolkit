@@ -7,15 +7,21 @@ import (
 	"sync"
 	"time"
 
+	"github.com/charmbracelet/lipgloss"
+	"github.com/charmbracelet/lipgloss/table"
+	"github.com/sousa/go-cli-toolkit/internal/config"
+	"github.com/sousa/go-cli-toolkit/internal/ui"
 	"github.com/spf13/cobra"
 )
 
 const (
 	pingUse     = "ping [url...]"
 	pingShort   = "Verifica se um ou mais hosts estão acessíveis"
-	pingLong    = `Verifica se as URLs informadas estão acessíveis através de uma requisição HTTP GET concorrente.`
+	pingLong    = `Verifica se as URLs informadas estão acessíveis através de uma requisição HTTP GET concorrente. 
+Se nenhuma URL for passada, utiliza a lista de 'hosts favoritos' do config.yaml.`
 	pingTimeout = 5 * time.Second
 )
+
 
 type pingResult struct {
 	url     string
@@ -29,9 +35,17 @@ var pingCmd = &cobra.Command{
 	Use:   pingUse,
 	Short: pingShort,
 	Long:  pingLong,
-	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runPing(args)
+		targets := args
+		if len(targets) == 0 {
+			targets = config.GetConfig().Hosts
+		}
+
+		if len(targets) == 0 {
+			return fmt.Errorf("nenhum host informado e nenhum host favorito encontrado no config.yaml")
+		}
+
+		return runPing(targets)
 	},
 }
 
@@ -57,18 +71,35 @@ func runPing(urls []string) error {
 		close(resultsChan)
 	}()
 
-	var successes, failures int
 	fmt.Printf("Iniciando ping em %d hosts...\n\n", len(urls))
 
+	t := table.New().
+		Border(lipgloss.NormalBorder()).
+		BorderStyle(lipgloss.NewStyle().Foreground(ui.ColorGray)).
+		Headers("HOST", "STATUS", "CODE", "DETAILS")
+
+	var successes, failures int
 	for res := range resultsChan {
+		statusText := ui.StatusFailText
+		codeStr := "---"
+		details := res.message
+
 		if res.online {
 			successes++
-			fmt.Printf("[OK]   %s (Status: %d)\n", res.url, res.status)
+			statusText = ui.StatusOkText
+			codeStr = fmt.Sprintf("%d", res.status)
+			details = "OK"
 		} else {
 			failures++
-			fmt.Printf("[ERRO] %s (%s)\n", res.url, res.message)
+			if res.status != 0 {
+				codeStr = fmt.Sprintf("%d", res.status)
+			}
 		}
+
+		t.Row(res.url, statusText, codeStr, details)
 	}
+
+	fmt.Println(t.Render())
 
 	fmt.Printf("\n--- Resumo ---\n")
 	fmt.Printf("Sucessos: %d\n", successes)
@@ -83,7 +114,13 @@ func pingHostConcurrently(targetURL string) pingResult {
 	ctx, cancel := context.WithTimeout(context.Background(), pingTimeout)
 	defer cancel()
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, targetURL, nil)
+	// Garantir protocolo para evitar erros comuns de iniciante
+	fullURL := targetURL
+	if len(targetURL) < 4 || (targetURL[:4] != "http") {
+		fullURL = "http://" + targetURL
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, fullURL, nil)
 	if err != nil {
 		return pingResult{url: targetURL, online: false, message: "erro ao criar requisição"}
 	}
@@ -101,3 +138,4 @@ func pingHostConcurrently(targetURL string) pingResult {
 
 	return pingResult{url: targetURL, online: false, status: resp.StatusCode, message: "status code inválido"}
 }
+

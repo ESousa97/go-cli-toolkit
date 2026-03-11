@@ -43,8 +43,10 @@ O repositório prioriza:
 
 ## Funcionalidades
 
-- **Comando Raiz (`toolkit`)** — Configuração inicial do entrypoint.
-- **Subcomando `ping`** — Verifica se um ou mais hosts estão acessíveis através de requisições HTTP GET concorrentes (Goroutines).
+- **Comando Raiz (`toolkit`)** — Configuração inicial do entrypoint com suporte a Viper.
+- **Subcomando `ping`** — Verifica se um ou mais hosts estão acessíveis através de requisições HTTP GET concorrentes.
+  - **Auto-Configuração:** Suporta lista de "hosts favoritos" via `config.yaml`.
+  - **Saída Visual:** Tabela elegante formatada com Lipgloss (Cores dinâmicas: Verde para ONLINE, Vermelho para OFFLINE).
 - **Subcomando `format json`** — Lê um JSON (via arquivo ou stdin), valida sua estrutura e o imprime formatado (Pretty Print).
 
 ---
@@ -53,6 +55,8 @@ O repositório prioriza:
 
 ![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=flat&logo=go&logoColor=white)
 ![Cobra](https://img.shields.io/badge/Cobra_CLI-E04E39?style=flat&logo=go&logoColor=white)
+![Viper](https://img.shields.io/badge/Viper-Config-blue?style=flat&logo=go&logoColor=white)
+![Lipgloss](https://img.shields.io/badge/Lipgloss-UI-pink?style=flat&logo=go&logoColor=white)
 
 ---
 
@@ -129,6 +133,48 @@ cd go-cli-toolkit
 go mod download
 ```
 
+### 🚀 Testes Rápidos (Copie e Cole)
+
+Quer ver a ferramenta em ação sem precisar fazer o build manual? Abra seu terminal na raiz do projeto e cole os ambientes prontos para testar as dependências (**Lipgloss** e **Viper**):
+
+**1. Ping Concorrente (Múltiplas URLs)**
+Teste o rastreio concorrente via *Goroutines*, formatado na tabela elegante do Lipgloss:
+```bash
+go run cmd/toolkit/main.go ping google.com github.com localhost:12345
+```
+
+**2. Sistema de "Hosts Favoritos" (Viper)**
+O toolkit tenta ler um `config.yaml` caso não receba parâmetros manuais. Exemplo interativo de criação e teste:
+
+👉 *No macOS / Linux / Git Bash:*
+```bash
+echo -e "hosts:\n  - google.com\n  - inexistent.local.test" > config.yaml
+go run cmd/toolkit/main.go ping
+```
+
+👉 *No Windows (PowerShell):*
+```powershell
+"hosts:`n  - google.com`n  - inexistent.local.test" | Out-File config.yaml -Encoding utf8
+go run cmd/toolkit/main.go ping
+```
+
+**3. Formatador JSON (Pretty Print)**
+Crie um arquivo JSON numa linha na máquina e o exiba reformatado (Pretty Print) logo na sequência:
+
+👉 *No macOS / Linux / Git Bash:*
+```bash
+echo '{"projeto":"Go CLI","status":"ativo","recursos":["ping","format"]}' > raw.json
+go run cmd/toolkit/main.go format json --file raw.json
+rm raw.json
+```
+
+👉 *No Windows (PowerShell):*
+```powershell
+'{"projeto":"Go CLI","status":"ativo","recursos":["ping","format"]}' > raw.json
+go run cmd/toolkit/main.go format json --file raw.json
+rm raw.json
+```
+
 ### Compilação do Binário
 
 **Compilar na raiz do ecossistema:**
@@ -152,21 +198,33 @@ Para rodar ajuda da ferramenta raiz:
 Executar o subcomando `ping` em múltiplos hosts de forma concorrente:
 
 ```powershell
-.\tk.exe ping https://google.com https://github.com https://invalid.site.test
+.\tk.exe ping google.com github.com
 ```
 
-Exemplo de saída:
-```text
-Iniciando ping em 3 hosts...
+**Dica:** Se você não passar argumentos, o Toolkit usará os hosts definidos em seu `config.yaml`:
 
-[OK]   https://google.com (Status: 200)
-[OK]   https://github.com (Status: 200)
-[ERRO] https://invalid.site.test (host inacessível)
+```yaml
+hosts:
+  - google.com
+  - seu-servidor.com
+```
+
+Exemplo de saída visual:
+
+```text
+Iniciando ping em 2 hosts...
+
+┌────────────┬────────┬────┬─────────┐
+│HOST        │STATUS  │CODE│DETAILS  │
+├────────────┼────────┼────┼─────────┤
+│google.com  │ ONLINE │200 │OK       │
+│github.com  │ ONLINE │200 │OK       │
+└────────────┴────────┴────┴─────────┘
 
 --- Resumo ---
 Sucessos: 2
-Falhas:   1
-Total:    3
+Falhas:   0
+Total:    2
 ```
 
 ### Format JSON

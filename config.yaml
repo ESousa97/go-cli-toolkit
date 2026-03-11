@@ -1,0 +1,4 @@
+hosts:
+  - google.com
+  - github.com
+  - inexistent.host.test

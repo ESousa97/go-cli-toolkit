@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"github.com/sousa/go-cli-toolkit/internal/config"
 	"github.com/spf13/cobra"
 )
 
@@ -26,5 +27,11 @@ func Execute() error {
 }
 
 func init() {
-	// Variáveis e Flags globais podem ser inicializadas aqui
+	cobra.OnInitialize(func() {
+		if err := config.InitConfig(); err != nil {
+			// Em uma CLI, erros de configuração podem ser reportados mas nem sempre impedem a execução
+			// Dependendo da criticidade, poderíamos usar panic ou exit.
+		}
+	})
 }
+
