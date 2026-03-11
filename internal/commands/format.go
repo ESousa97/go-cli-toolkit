@@ -67,25 +67,31 @@ func runFormatJSON() error {
 		}
 	}
 
+	result, err := formatJSONBytes(input)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(result)
+	return nil
+}
+
+// formatJSONBytes encapsula a lógica principal de formatação e corzinha para testabilidade
+func formatJSONBytes(input []byte) (string, error) {
 	// 2. Validar e Parsear JSON
 	var raw interface{}
 	if err := json.Unmarshal(input, &raw); err != nil {
-		return fmt.Errorf("JSON inválido: %w", err)
+		return "", fmt.Errorf("JSON inválido: %w", err)
 	}
 
 	// 3. Pretty Print
 	pretty, err := json.MarshalIndent(raw, "", "  ")
 	if err != nil {
-		return fmt.Errorf("erro ao formatar JSON: %w", err)
+		return "", fmt.Errorf("erro ao formatar JSON: %w", err)
 	}
 
-	// 4. Output colorizado manual (estratégia simples baseada em regras sem libs pesadas)
-	// Para um projeto educacional seguindo P2, usamos ANSI codes simples diretamente
-	// ou mantemos o padrão se não houver token de cor disponível ainda no sistema.
-	// Como solicitado 'colorida', aplicaremos um highlighter rudimentar.
-	
-	fmt.Println(colorizeJSON(string(pretty)))
-	return nil
+	// 4. Output colorizado manual (estratégia simples)
+	return colorizeJSON(string(pretty)), nil
 }
 
 // colorizeJSON aplica cores ANSI básicas para destacar chaves e valores
@@ -100,3 +106,4 @@ func colorizeJSON(input string) string {
 	
 	return input
 }
+
