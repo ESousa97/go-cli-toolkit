@@ -122,9 +122,10 @@ Acompanhe a evolução do projeto e as etapas de maturidade atingidas:
 - [x] **Fase 1: Fundação** — Estrutura Cobra + primeiro comando `ping`.
 - [x] **Fase 2: Manipulação de Dados** — Subcomando `format json` com suporte a stdin.
 - [x] **Fase 3: Performance** — Refatoração para concorrência (Goroutines/Channels).
-- [x] **Fase 4: Estética (DX)** — Integração com Viper/Lipgloss e tabelas premium.
-- [x] **Fase 5: Profissionalização** — Makefile, Testify mocks e governança completa.
-- [ ] **Fase 6: Próximos Passos** — Suporte a exportação CSV/YAML e integração Docker.
+- [x] **Fase 5: Governança e Documentação** (Completo)
+    - [x] Suite de doc profissional (README, CONTRIBUTING, LICENSE).
+    - [x] Documentação Godoc (100% de cobertura nos exports).
+    - [x] Implementação de GitHub Actions (CI) e Badges de Qualidade.
 
 ## Contribuindo
 
