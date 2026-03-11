@@ -1,4 +1,4 @@
-module github.com/sousa/go-cli-toolkit
+module github.com/ESousa97/go-cli-toolkit
 
 go 1.25.0
 

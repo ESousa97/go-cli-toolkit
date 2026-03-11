@@ -1,7 +1,7 @@
 package commands
 
 import (
-	"github.com/sousa/go-cli-toolkit/internal/config"
+	"github.com/ESousa97/go-cli-toolkit/internal/config"
 	"github.com/spf13/cobra"
 )
 
@@ -20,8 +20,8 @@ var rootCmd = &cobra.Command{
 	SilenceErrors: true, // O main.go já trata e loga o erro
 }
 
-// Execute adiciona todos os comandos filhos ao root command e configura flags de forma apropriada.
-// Isso é chamado pela função main.main(). Esta função precisa ser executada apenas uma vez pelo rootCmd.
+// Execute adds all child commands to the root command and sets flags appropriately.
+// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() error {
 	return rootCmd.Execute()
 }

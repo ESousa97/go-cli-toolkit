@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/sousa/go-cli-toolkit/internal/commands"
+	"github.com/ESousa97/go-cli-toolkit/internal/commands"
 )
 
 func main() {

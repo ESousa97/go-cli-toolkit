@@ -9,8 +9,8 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/table"
-	"github.com/sousa/go-cli-toolkit/internal/config"
-	"github.com/sousa/go-cli-toolkit/internal/ui"
+	"github.com/ESousa97/go-cli-toolkit/internal/config"
+	"github.com/ESousa97/go-cli-toolkit/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -109,7 +109,8 @@ func runPing(urls []string) error {
 	return nil
 }
 
-// pingHostConcurrently realiza o ping e retorna um objeto de resultado
+// pingHostConcurrently performs a single HTTP GET request to the targetURL
+// and returns a [pingResult] with connectivity details.
 func pingHostConcurrently(targetURL string) pingResult {
 	ctx, cancel := context.WithTimeout(context.Background(), pingTimeout)
 	defer cancel()
