@@ -7,7 +7,7 @@
   <br>
 
   ![CI](https://github.com/ESousa97/go-cli-toolkit/actions/workflows/ci.yml/badge.svg)
-  [![Go Report Card](https://goreportcard.com/badge/github.com/ESousa97/go-cli-toolkit)](https://goreportcard.com/report/github.com/ESousa97/go-cli-toolkit)
+  [![Go Report Card](https://goreportcard.com/badge/github.com/ESousa97/go-cli-toolkit?v=2)](https://goreportcard.com/report/github.com/ESousa97/go-cli-toolkit)
   [![CodeFactor](https://www.codefactor.io/repository/github/ESousa97/go-cli-toolkit/badge)](https://www.codefactor.io/repository/github/ESousa97/go-cli-toolkit)
   ![Go Reference](https://pkg.go.dev/badge/github.com/ESousa97/go-cli-toolkit.svg)
   ![License](https://img.shields.io/github/license/ESousa97/go-cli-toolkit)
