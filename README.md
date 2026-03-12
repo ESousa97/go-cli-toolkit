@@ -1,13 +1,19 @@
-# Go CLI Toolkit
+<div align="center">
+  <h1>Go CLI Toolkit</h1>
+  <p>Utilitários essenciais de rede e dados em uma CLI robusta, concorrente e extensível.</p>
 
-> Utilitários essenciais de rede e dados em uma CLI robusta, concorrente e extensível.
+  <img src="assets/github-go.png" alt="Go CLI Toolkit Banner" width="600px">
 
-![CI](https://github.com/ESousa97/go-cli-toolkit/actions/workflows/ci.yml/badge.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/ESousa97/go-cli-toolkit/badge)](https://www.codefactor.io/repository/github/ESousa97/go-cli-toolkit)
-![Go Reference](https://pkg.go.dev/badge/github.com/ESousa97/go-cli-toolkit.svg)
-![License](https://img.shields.io/github/license/ESousa97/go-cli-toolkit)
-![Go Version](https://img.shields.io/github/go-mod/go-version/ESousa97/go-cli-toolkit)
-![Last Commit](https://img.shields.io/github/last-commit/ESousa97/go-cli-toolkit)
+  <br>
+
+  ![CI](https://github.com/ESousa97/go-cli-toolkit/actions/workflows/ci.yml/badge.svg)
+  [![Go Report Card](https://goreportcard.com/badge/github.com/ESousa97/go-cli-toolkit)](https://goreportcard.com/report/github.com/ESousa97/go-cli-toolkit)
+  [![CodeFactor](https://www.codefactor.io/repository/github/ESousa97/go-cli-toolkit/badge)](https://www.codefactor.io/repository/github/ESousa97/go-cli-toolkit)
+  ![Go Reference](https://pkg.go.dev/badge/github.com/ESousa97/go-cli-toolkit.svg)
+  ![License](https://img.shields.io/github/license/ESousa97/go-cli-toolkit)
+  ![Go Version](https://img.shields.io/github/go-mod/go-version/ESousa97/go-cli-toolkit)
+  ![Last Commit](https://img.shields.io/github/last-commit/ESousa97/go-cli-toolkit)
+</div>
 
 ---
 
@@ -134,6 +140,8 @@ Interessado em ajudar? Veja nosso [CONTRIBUTING.md](CONTRIBUTING.md) para detalh
 
 Este projeto está licenciado sob a **MIT License** — veja o arquivo [LICENSE](LICENSE) para detalhes.
 
+<div align="center">
+
 ## Autor
 
 **Enoque Sousa**
@@ -141,7 +149,6 @@ Este projeto está licenciado sob a **MIT License** — veja o arquivo [LICENSE]
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/enoque-sousa-bb89aa168/)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/ESousa97)
 [![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=flat&logo=target&logoColor=white)](https://enoquesousa.vercel.app)
-
 
 **[⬆ Voltar ao topo](#go-cli-toolkit)**
 
