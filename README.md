@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Go CLI Toolkit</h1>
-  <p>Utilitários essenciais de rede e dados em uma CLI robusta, concorrente e extensível.</p>
+  <p>Essential network and data utilities in a robust, concurrent, and extensible CLI.</p>
 
   <img src="assets/github-go.png" alt="Go CLI Toolkit Banner" width="600px">
 
@@ -17,12 +17,23 @@
 
 ---
 
-O **Go CLI Toolkit** é uma coleção de ferramentas de linha de comando projetadas para desenvolvedores que buscam eficiência no diagnóstico de rede e manipulação de dados. Construído em Go para performance máxima, o toolkit demonstra o uso avançado de concorrência e modularização extrema. Ideal para automação de tarefas diárias e validação rápida de ambientes distribuídos.
+> [!IMPORTANT]
+> **This repository is archived.** It represents my initial journey into the **Go** language and serves as a personal study reference for language fundamentals, concurrency patterns, and CLI architecture.
 
-## Demonstração
+**Go CLI Toolkit** is a collection of command-line tools designed to demonstrate advanced concurrency and extreme modularization in Go. It is ideal for daily task automation and rapid distributed environment validation.
 
-### Ping Concorrente
-Verifique múltiplos hosts simultaneamente com status visual de fácil leitura:
+## Repository Purpose
+
+This project was built as part of my Go learning path, focusing on:
+- **Fundamentals:** Strong typing, interfaces, and the *Standard Go Project Layout*.
+- **Concurrency:** Practical use of *Goroutines*, *Channels*, and *WaitGroups*.
+- **CLI Tooling:** Integration with industry-leading frameworks (Cobra and Viper).
+- **Code Quality:** Implementation of unit tests, CI/CD pipelines, and professional documentation.
+
+## Demonstration
+
+### Concurrent Ping
+Check multiple hosts simultaneously with easy-to-read visual status:
 
 ```bash
 tk ping google.com github.com localhost:8080
@@ -30,7 +41,7 @@ tk ping google.com github.com localhost:8080
 
 Output:
 ```text
-Iniciando ping em 3 hosts...
+Starting ping for 3 hosts...
 
 ┌────────────┬────────┬────┬─────────┐
 │HOST        │STATUS  │CODE│DETAILS  │
@@ -41,37 +52,37 @@ Iniciando ping em 3 hosts...
 └────────────┴────────┴────┴─────────┘
 ```
 
-### Formatador JSON
-Transforme JSONs bagunçados em estruturas legíveis (pretty-print):
+### JSON Formatter
+Transform messy JSON into readable structures (pretty-print):
 
 ```bash
 echo '{"id":1,"status":"ok"}' | tk format json
 ```
 
-## Stack Tecnológico
+## Tech Stack
 
-| Tecnologia | Papel |
+| Technology | Role |
 |------------|-------|
-| **Go 1.25** | Linguagem de alta performance e concorrência nativa |
-| **Cobra CLI** | Framework de comandos e subcomandos de nível industrial |
-| **Viper** | Gestão de configuração flexível (Yaml/Env) |
-| **Lipgloss** | Estilização de terminais e renderização de tabelas |
-| **Testify** | Suíte de testes unitários e asserções |
+| **Go 1.25** | High-performance language with native concurrency |
+| **Cobra CLI** | Industrial-grade command and subcommand framework |
+| **Viper** | Flexible configuration management (YAML/Env) |
+| **Lipgloss** | Terminal styling and table rendering |
+| **Testify** | Unit testing suite and assertions |
 
-## Pré-requisitos
+## Prerequisites
 
 - **Go >= 1.25**
-- **Make** (opcional, para conveniência de build)
+- **Make** (optional, for build convenience)
 
-## Instalação e Uso
+## Installation and Usage
 
-### Como binário
+### As a binary
 
 ```bash
 go install github.com/ESousa97/go-cli-toolkit/cmd/tk@latest
 ```
 
-### A partir do source
+### From source
 
 ```bash
 git clone https://github.com/ESousa97/go-cli-toolkit.git
@@ -82,20 +93,20 @@ make install
 
 ## Makefile Targets
 
-| Target | Descrição |
+| Target | Description |
 |--------|-----------|
-| `make build` | Compila o binário localmente (`tk`) |
-| `make test` | Executa a suíte completa de testes unitários |
-| `make install` | Instala o binário no seu `$GOPATH/bin` |
-| `make clean` | Remove artefatos de build e temporários |
-| `make run` | Executa a CLI em tempo de compilação rápida |
+| `make build` | Compiles the binary locally (`tk`) |
+| `make test` | Runs the full unit test suite |
+| `make install` | Installs the binary to your `$GOPATH/bin` |
+| `make clean` | Removes build artifacts and temporary files |
+| `make run` | Executes the CLI in fast-compile mode |
 
-## Arquitetura
+## Architecture
 
-O projeto segue o **Standard Go Project Layout**, dividindo responsabilidades entre `cmd/` e `internal/`.
+The project follows the **Standard Go Project Layout**, separating responsibilities between `cmd/` and `internal/`.
 
-### Estratégia de Concorrência
-O comando `ping` utiliza o modelo de _Fan-out_ para despachar requisições HTTP em Goroutines isoladas, sincronizadas por um `sync.WaitGroup` e coletadas via `channel` thread-safe.
+### Concurrency Strategy
+The `ping` command utilizes the *Fan-out* model to dispatch HTTP requests in isolated Goroutines, synchronized by a `sync.WaitGroup` and collected via a thread-safe `channel`.
 
 ```mermaid
 graph LR
@@ -110,39 +121,40 @@ graph LR
 
 ## API Reference
 
-A documentação detalhada das interfaces e tipos está disponível em [pkg.go.dev/github.com/ESousa97/go-cli-toolkit](https://pkg.go.dev/github.com/ESousa97/go-cli-toolkit).
+Detailed documentation for interfaces and types is available at [pkg.go.dev/github.com/ESousa97/go-cli-toolkit](https://pkg.go.dev/github.com/ESousa97/go-cli-toolkit).
 
-## Configuração
+## Configuration
 
-O sistema utiliza o arquivo `config.yaml` para persistir preferências do usuário.
+The system uses `config.yaml` to persist user preferences.
 
-| Chave | Descrição | Tipo | Padrão |
+| Key | Description | Type | Default |
 |-------|-----------|------|---------|
-| `hosts` | Lista de URLs favoritas para o comando ping | `[]string` | `[]` |
+| `hosts` | List of favorite URLs for the ping command | `[]string` | `[]` |
 
-## Roadmap
+## Roadmap (Historical)
 
-Acompanhe a evolução do projeto e as etapas de maturidade atingidas:
+Milestones achieved during development:
 
-- [x] **Fase 1: Fundação** — Estrutura Cobra + primeiro comando `ping`.
-- [x] **Fase 2: Manipulação de Dados** — Subcomando `format json` com suporte a stdin.
-- [x] **Fase 3: Performance** — Refatoração para concorrência (Goroutines/Channels).
-- [x] **Fase 5: Governança e Documentação** (Completo)
-    - [x] Suite de doc profissional (README, CONTRIBUTING, LICENSE).
-    - [x] Documentação Godoc (100% de cobertura nos exports).
-    - [x] Implementação de GitHub Actions (CI) e Badges de Qualidade.
+- [x] **Phase 1: Foundation** — Cobra structure + initial `ping` command.
+- [x] **Phase 2: Data Manipulation** — `format json` subcommand with stdin support.
+- [x] **Phase 3: Performance** — Refactoring for concurrency (Goroutines/Channels).
+- [x] **Phase 5: Governance and Documentation** (Complete)
+    - [x] Professional doc suite (README, CONTRIBUTING, LICENSE).
+    - [x] Godoc documentation (100% export coverage).
+    - [x] GitHub Actions (CI) and Quality Badges.
 
-## Contribuindo
+## Contributing
 
-Interessado em ajudar? Veja nosso [CONTRIBUTING.md](CONTRIBUTING.md) para detalhes sobre o processo de Pull Request e padrões de código.
+> [!NOTE]
+> This project is **archived**. New Pull Requests are not being reviewed at this time, but feel free to **Fork** the code for your own studies.
 
-## Licença
+## License
 
-Este projeto está licenciado sob a **MIT License** — veja o arquivo [LICENSE](LICENSE) para detalhes.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 <div align="center">
 
-## Autor
+## Author
 
 **Enoque Sousa**
 
@@ -150,10 +162,10 @@ Este projeto está licenciado sob a **MIT License** — veja o arquivo [LICENSE]
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/ESousa97)
 [![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=flat&logo=target&logoColor=white)](https://enoquesousa.vercel.app)
 
-**[⬆ Voltar ao topo](#go-cli-toolkit)**
+**[⬆ Back to top](#go-cli-toolkit)**
 
-Feito com ❤️ por [Enoque Sousa](https://github.com/ESousa97)
+Made with ❤️ by [Enoque Sousa](https://github.com/ESousa97)
 
-**Status do Projeto:** Ativo — Em constante atualização
+**Project Status:** Archived (Study Reference)
 
 </div>

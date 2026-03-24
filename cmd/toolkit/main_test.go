@@ -3,7 +3,7 @@ package main
 import "testing"
 
 func TestMainFunctionPlaceholder(t *testing.T) {
-	// Apenas para evitar "[no test files]" no pacote cmd/main.
-	// Toda a lógica real da CLI está coberta dentro de internal/commands.
-	// Execute() é testado indiretamente pelas chamadas rootCmd.
+	// Only to avoid "[no test files]" in the cmd/main package.
+	// All real CLI logic is covered within internal/commands.
+	// Execute() is indirectly tested via rootCmd calls.
 }

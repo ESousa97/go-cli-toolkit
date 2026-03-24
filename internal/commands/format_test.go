@@ -14,20 +14,20 @@ func TestFormatJSONBytes(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "JSON válido simples",
-			input:   []byte(`{"chave":"valor","ativo":true}`),
-			want:    "{\n  \"ativo\": true,\n  \"chave\": \"valor\"\n}",
+			name:    "Simple valid JSON",
+			input:   []byte(`{"key":"value","active":true}`),
+			want:    "{\n  \"active\": true,\n  \"key\": \"value\"\n}",
 			wantErr: false,
 		},
 		{
-			name:    "JSON com array",
+			name:    "JSON with array",
 			input:   []byte(`[1,2,3]`),
 			want:    "[\n  1,\n  2,\n  3\n]",
 			wantErr: false,
 		},
 		{
-			name:    "JSON inválido",
-			input:   []byte(`{"chave":valor}`),
+			name:    "Invalid JSON",
+			input:   []byte(`{"key":value}`),
 			want:    "",
 			wantErr: true,
 		},

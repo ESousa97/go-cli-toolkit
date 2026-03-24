@@ -1,7 +1,18 @@
 linters-settings:
   misspell:
+    locale: US
     ignore-words:
-      - comando
-      - comandos
-      - eles
       - stretchr
+      - lipgloss
+      - cobra
+      - viper
+      - goroutines
+      - waitgroups
+      - stdin
+      - stdout
+      - stderr
+      - gopath
+      - godoc
+      - esousa97
+      - enoque
+      - sousa

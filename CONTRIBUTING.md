@@ -1,6 +1,12 @@
 # Contributing to Go CLI Toolkit
 
-Thank you for considering a contribution. This document describes the development setup, conventions, and workflow required for submitting changes.
+> [!CAUTION]
+> **This project is ARCHIVED.**
+> It serves as a personal learning record for the Go language. As such, I am no longer actively reviewing Pull Requests or maintaining the codebase. You are encouraged to fork this repository for your own study and experimentation.
+
+---
+
+This document remains here for historical reference, documenting the standards and workflow used during the development of this project.
 
 ## Prerequisites
 
@@ -53,11 +59,7 @@ go vet ./...
 make build
 ```
 
-All checks must pass before opening a Pull Request.
-
-## Branch Naming
-
-Use the following prefixes:
+## Branch Naming (Historical)
 
 | Prefix | Purpose | Example |
 |--------|---------|---------|
@@ -77,28 +79,6 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
 [optional body]
 ```
 
-Examples:
+## License
 
-```
-feat: add CSV output format to ping command
-fix: handle empty stdin gracefully in format json
-docs: document config.yaml schema
-test: add edge cases for concurrent ping
-```
-
-## Pull Request Process
-
-1. Fork the repository and create your branch from `main`.
-2. Make your changes following the conventions above.
-3. Run `make test` and `go vet ./...` locally.
-4. Open a Pull Request with a clear title and description.
-5. Wait for review. Address feedback with fixup commits, then squash before merge.
-
-## Areas Where Contributions Are Welcome
-
-- New formatter subcommands (CSV, YAML, TOML)
-- Output export options (file, clipboard)
-- Additional ping protocols (TCP, ICMP)
-- Performance improvements in concurrent operations
-- Documentation improvements and translations
-- Test coverage expansion
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
